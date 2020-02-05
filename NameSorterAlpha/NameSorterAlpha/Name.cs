@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NameSorterAlpha
+namespace NameSorter
 {
     class Name : IComparable<Name>
     {
