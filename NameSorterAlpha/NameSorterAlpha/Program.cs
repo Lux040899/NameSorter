@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace NameSorter
+namespace NameSorter  
 {
     class Program
     {
