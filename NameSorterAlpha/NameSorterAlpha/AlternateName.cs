@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NameSorter 
 {
-    class AlternateName : IComparable<AlternateName>
+    public class AlternateName : IComparable<AlternateName>
     {
         private string name;
         private string reversed_name;
@@ -21,16 +17,23 @@ namespace NameSorter
                 reversed_name += name_component;
                 reversed_name += ' ';
             }
+            int name_len = reversed_name.Length - 1;
+            reversed_name = reversed_name.Substring(0, name_len);
         }
 
         public int CompareTo(AlternateName other)
         {
-            return this.reversed_name.CompareTo(other.reversed_name);
+            return reversed_name.CompareTo(other.reversed_name);
         }
 
         public string getName()
         {
-            return this.name;
+            return name;
+        }
+
+        public string getReversedName()
+        {
+            return reversed_name;
         }
     }
 }
