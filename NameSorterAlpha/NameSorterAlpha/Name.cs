@@ -6,15 +6,16 @@ namespace NameSorter
     {
         private string name;
         private string Lastname;
-        private int index_of_last_name;
+        private int index_tracker;
         public Name(string name)
         {
             this.name = name;
-            // Finding the first index of Last Name
-            index_of_last_name = name.LastIndexOf(' ') + 1;
-            this.Lastname = name.Substring(index_of_last_name);
+            // Finding the first index of Last Name.
+            index_tracker = name.LastIndexOf(' ') + 1;
+            this.Lastname = name.Substring(index_tracker);
         }
 
+        // Overwriting the method in IComparable interface to specify behaviour for Name class object.
         public int CompareTo(Name other)
         {
             if (this.Lastname.CompareTo(other.Lastname) == 0)
@@ -25,11 +26,12 @@ namespace NameSorter
             else return this.Lastname.CompareTo(other.Lastname);
         }
 
+        // Method to compare two names in cas of a collision i.e. same last name.
         public int ComparePreviousNames(Name other)
         {
             int result = 0;
 
-            while (this.index_of_last_name > 0 && other.index_of_last_name > 0)
+            while (this.index_tracker > 0 && other.index_tracker > 0)
             {
                 result = this.getPreviousName().CompareTo(other.getPreviousName());
                 if (result != 0)
@@ -40,48 +42,41 @@ namespace NameSorter
             }
 
 
-            if (this.index_of_last_name == 0 && other.index_of_last_name > 0)
+            if (this.index_tracker == 0 && other.index_tracker > 0)
             {
                 this.ResetLastNameIndex(other);
                 return -1;
             }
-            else if (this.index_of_last_name > 0 && other.index_of_last_name == 0)
+            else if (this.index_tracker > 0 && other.index_tracker == 0)
             {
                 this.ResetLastNameIndex(other);
                 return 1;
             }
 
             this.ResetLastNameIndex(other);
-
             return result;
         }
 
+        // Method to return the previous component of a given name.
         public string getPreviousName()
         {
             string PreviousName;
-            int index_tracker = index_of_last_name - 2;
+            int index = this.index_tracker - 2;
 
-            while (index_tracker > 0 && this.name[index_tracker] != ' ') index_tracker--;
+            while (index > 0 && this.name[index - 1] != ' ') index--;
 
-            if (index_tracker != 0)
-            {
-                PreviousName = this.name.Substring(index_tracker + 1, index_of_last_name - index_tracker - 2);
-                this.index_of_last_name = index_tracker + 1;
-            }
-
-            else
-            {
-                PreviousName = this.name.Substring(index_tracker, index_of_last_name - 1);
-                this.index_of_last_name = index_tracker;
-            }
+            
+            PreviousName = this.name.Substring(index, this.index_tracker - index - 1);
+            this.index_tracker = index + 1;
 
             return PreviousName;
         }
 
+        // Method to reset the index_ to the Last Name
         public void ResetLastNameIndex(Name other)
         {
-            this.index_of_last_name = this.name.LastIndexOf(' ') + 1;
-            other.index_of_last_name = other.name.LastIndexOf(' ') + 1;
+            this.index_tracker = this.name.LastIndexOf(' ') + 1;
+            other.index_tracker = other.name.LastIndexOf(' ') + 1;
 
         }
 
