@@ -10,7 +10,7 @@ namespace NameTest
         [TestMethod]
         public void Reversed_name_check()
         {
-            string expected = "Mittal Lakshya";
+            string expected = "MittalLakshya";
             string actual = name.getReversedName();
 
             Assert.AreEqual(expected, actual, "Name not reversed corretcly");

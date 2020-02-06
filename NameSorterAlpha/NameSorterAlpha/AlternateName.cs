@@ -15,10 +15,7 @@ namespace NameSorter
             foreach (string name_component in nameArray)
             {
                 reversed_name += name_component;
-                reversed_name += ' ';
             }
-            int name_len = reversed_name.Length - 1;
-            reversed_name = reversed_name.Substring(0, name_len);
         }
 
         public int CompareTo(AlternateName other)
