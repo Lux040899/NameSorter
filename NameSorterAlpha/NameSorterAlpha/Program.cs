@@ -8,36 +8,24 @@ namespace NameSorter
     {
         public static void Main(string[] args)
         {
-            // List<Name> names = new List<Name>();
-            List<AlternateName> names = new List<AlternateName>();
-            List<string> sortNameList = new List<string>();
+            List<Person> people = new List<Person>();
+            List<string> sortPersonList = new List<string>();
 
-            // Initialising the list of names
-            foreach (string name in File.ReadLines(args[0]))
+            foreach (string info in File.ReadLines(args[0]))
             {
-                // names.Add(new Name(name));
-                names.Add(new AlternateName(name));
+                people.Add(new Person(info));
             }
 
-            names.Sort();
+            people = people.Sort(person => person.LastName).ThenBy(person => person.GivenNames);
 
 
-            /*
-            foreach (Name name in names)
+            foreach (Person person in people)
             {
-                Console.WriteLine(name.getName());
-                sortNameList.Add(name.getName());
-            }            
-            */
-            
-            // Initialsiing the list of sorted names
-            foreach (AlternateName name in names)
-            {
-                Console.WriteLine(name.getName());
-                sortNameList.Add(name.getName());
+                Console.WriteLine(person.getName());
+                sortPersonList.Add(person.getName());
             }
 
-            File.WriteAllLines("sorted-names-list.txt", sortNameList);
+            File.WriteAllLines("sorted-names-list.txt", sortPersonList);
             Console.ReadKey();
         }
 

@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NameSorter 
 {
-    class AlternateName : IComparable<AlternateName>
-    {
-        private string name;
-        private string reversed_name;
+    class Person
+    {        
+        public  string GivenNames;
+        public string LastName;
+        public DateTime _dateOfBirth;
 
-        public AlternateName(string name)
+        private const string dateFormat = "dd-MM-yy";
+
+        public Person(string info)
         {
-            this.name = name;
-            string[] nameArray = name.Split(' ');
-            Array.Reverse(nameArray);
-            foreach (string name_component in nameArray)
+            info.TrimEnd();
+            string[] infoArray = info.Split(' ');
+            int length = infoArray.Length;
+
+            _dateOfBirth = DateTime.ParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture);
+            LastName = infoArray[length - 2];
+            for (int i = 0; i < length - 2; i++)
             {
-                reversed_name += name_component;
-                reversed_name += ' ';
+                GivenNames += infoArray[i];
+                GivenNames += ' ';
             }
-        }
+            GivenNames.TrimEnd();
 
-        public int CompareTo(AlternateName other)
-        {
-            return this.reversed_name.CompareTo(other.reversed_name);
         }
 
         public string getName()
         {
-            return this.name;
+            return this.GivenNames + this.LastName;
         }
     }
 }
