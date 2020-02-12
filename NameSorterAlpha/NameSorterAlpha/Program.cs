@@ -26,7 +26,8 @@ namespace NameSorter
                 }
             }
 
-            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ToList();
+            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ThenBy(person => person._dateOfBirth)
+                .ToList();
 
 
             foreach (Person person in people)
