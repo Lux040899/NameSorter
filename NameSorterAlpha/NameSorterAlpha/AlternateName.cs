@@ -10,7 +10,7 @@ namespace NameSorter
         public DateTime _dateOfBirth;
         int line_num;
 
-        private const string dateFormat = "dd-MM-yy";
+        private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
         public Person(string info, int line_num)
         {
@@ -27,19 +27,18 @@ namespace NameSorter
                 GivenNames += infoArray[i];
                 GivenNames += ' ';
             }
-            GivenNames.TrimEnd(new char[] {' '}); 
+            GivenNames.TrimEnd(new char[] {' '});
 
-            try
+            if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, 
+                out _dateOfBirth)) { }
+
+            else
             {
-                _dateOfBirth = DateTime.ParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("The person in line " + line_num + " is missing DOB");
+                Console.WriteLine("The person in line " + line_num + " is missing DOB.\n");
+
             }
 
-           
-            
+
         }
 
         public string getName()

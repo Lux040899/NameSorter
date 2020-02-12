@@ -22,7 +22,7 @@ namespace NameSorter
                 }
                 catch (MissingInfoException)
                 {
-                    Console.WriteLine("The person in line " + line_count + " is missing information");
+                    Console.WriteLine("The person in line " + line_count + " is missing information.\n");
                 }
             }
 
