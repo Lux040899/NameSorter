@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NameSorter  
 {
@@ -8,26 +9,33 @@ namespace NameSorter
     {
         public static void Main(string[] args)
         {
-            //List<Name> names = new List<Name>();
-            List<AlternateName> names = new List<AlternateName>();
-            List<string> sortNameList = new List<string>();
+            List<Person> people = new List<Person>();
+            List<string> sortPersonList = new List<string>();
+            int line_count = 0;
 
-            // Initialising the list of names
-            foreach (string name in File.ReadLines(args[0]))
+            foreach (string info in File.ReadLines(args[0]))
             {
-                names.Add(new AlternateName(name));
+                try
+                {
+                    line_count += 1;
+                    people.Add(new Person(info, line_count));
+                }
+                catch (MissingInfoException)
+                {
+                    Console.WriteLine("The person in line " + line_count + " is missing information");
+                }
             }
 
-            names.Sort();
+            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ToList();
 
-            // Initialsiing the list of sorted names
-            foreach (AlternateName name in names)
+
+            foreach (Person person in people)
             {
-                Console.WriteLine(name.getName());
-                sortNameList.Add(name.getName());
+                Console.WriteLine(person.getName());
+                sortPersonList.Add(person.getName());
             }
 
-            File.WriteAllLines("sorted-names-list.txt", sortNameList);
+            File.WriteAllLines("sorted-names-list.txt", sortPersonList);
             Console.ReadKey();
         }
 
