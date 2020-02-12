@@ -7,6 +7,11 @@ Name Sorter is a program in C# to sort a list of given names based on the LastNa
 
 Microsoft Visual Studio 2017
 
+#Assumptions
+
+We assume that the input file is well formatted and completely popullated.
+Still I have implemented functionality to handle the code in case the input file doesn't meet the requiremenrts. 
+
 
 #Usage 
 
