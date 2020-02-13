@@ -11,19 +11,34 @@ namespace NameSorter
         {
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            int line_count = 0;
+            int person_count = 0;
+            int missing_info_count = 0;
 
             foreach (string info in File.ReadLines(args[0]))
             {
                 try
                 {
-                    line_count += 1;
-                    people.Add(new Person(info, line_count));
+                    person_count += 1;
+                    people.Add(new Person(info, person_count));
                 }
-                catch (MissingInfoException)
+                catch (MissingLastNameException)
                 {
-                    Console.WriteLine("The person in line " + line_count + " is missing information.\n");
+                    missing_info_count += 1;
+                    Console.WriteLine("The person in line " + person_count + " with info, " +
+                        info + " is missing his/her Last Name.");
                 }
+                catch (MissingBDayException)
+                {
+                    missing_info_count += 1;
+                    Console.WriteLine("The person in line " + person_count + " with info, " +
+                        info + " is missing his/her Birthday.");
+                }
+            }
+
+            if (missing_info_count > 0)
+            {
+                Console.ReadKey();
+                return;
             }
 
             people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ThenBy(person => person._dateOfBirth)

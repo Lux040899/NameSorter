@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlternateName.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="MissingBDayException.cs" />
     <Compile Include="MissingInfoException.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Program.cs" />
