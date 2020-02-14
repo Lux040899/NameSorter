@@ -15,9 +15,15 @@ namespace NameSorter
         public Person(string info, int line_num)
         {
             this.line_num = line_num;
-            info.TrimEnd();
             string[] infoArray = info.Split(' ');
             int length = infoArray.Length;
+
+            if (info == "")
+            {
+                throw new MissingPersonException();
+            }
+
+            info.TrimEnd();
 
             if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out _dateOfBirth)) { }
