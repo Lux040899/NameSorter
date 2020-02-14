@@ -46,7 +46,7 @@ namespace NameSorter
 
         public string getName()
         {
-            return GivenNames + LastName + " " + _dateOfBirth.ToString("dd-MM-yy");
+            return GivenNames + LastName;
         }
     }
 }
