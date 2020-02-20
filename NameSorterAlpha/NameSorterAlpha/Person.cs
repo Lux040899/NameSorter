@@ -3,27 +3,23 @@ using System.Globalization;
 
 namespace NameSorter 
 {
-    class Person
+    public class Person
     {        
         public  string GivenNames;
         public string LastName;
-        public DateTime _dateOfBirth;
-        int line_num;
+        public DateTime _dateOfBirth;     
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
-        public Person(string info, int line_num)
+        public Person(string info)
         {
-            this.line_num = line_num;
+            info = info.TrimEnd();
             string[] infoArray = info.Split(' ');
             int length = infoArray.Length;
-
             if (info == "")
             {
                 throw new MissingPersonException();
             }
-
-            info.TrimEnd();
 
             if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out _dateOfBirth)) { }
@@ -41,7 +37,7 @@ namespace NameSorter
                 GivenNames += infoArray[i];
                 GivenNames += ' ';
             }
-            GivenNames.TrimEnd(new char[] {' '});
+            GivenNames = GivenNames.TrimEnd();
         }
 
         public string getName()

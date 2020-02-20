@@ -22,7 +22,7 @@ namespace NameSorter
                     try
                     {
                         person_count += 1;
-                        people.Add(new Person(info, person_count));
+                        people.Add(new Person(info));
                     }
                     catch (MissingPersonException)
                     {

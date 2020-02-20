@@ -1,38 +1,40 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NameSorter;
+using System.Globalization;
+using System;
 
 namespace NameTest
 {
     [TestClass]
-    public class NameTest
+    public class PersonTest
     {
-        AlternateName name = new AlternateName("Lakshya Mittal");
+        Person person = new Person("Lakshya Mittal 04-08-99");
         [TestMethod]
-        public void Reversed_name_check()
+        public void Last_Name_check()
         {
-            string expected = "MittalLakshya";
-            string actual = name.getReversedName();
+            string expected = "Mittal";
+            string actual = person.LastName; 
 
             Assert.AreEqual(expected, actual, "Name not reversed corretcly");
         }
 
         [TestMethod]
-        public void Name_check()
+        public void Given_Name_check()
         {
-            string expected = "Lakshya Mittal";
-            string actual = name.getName();
+            string expected = "Lakshya";
+            string actual = person.GivenNames;
 
             Assert.AreEqual(expected, actual, "Name not stored correctly");
         }
 
         [TestMethod]
-        public void compare_to_check()
+        public void DOB_check()
         {
-            AlternateName name2 = new AlternateName("Anil Aggarwal");
-            int expected = 1;
-            int actual = name.CompareTo(name2);
+            DateTime date;
+            DateTime.TryParseExact("04-08-99", "dd-MM-yy", CultureInfo.InvariantCulture, DateTimeStyles.None,
+                out date);
 
-            Assert.AreEqual(expected, actual, "Not compared correctly");
+            Assert.AreEqual(person._dateOfBirth, date, "Not compared correctly");
         }
     }
 }
