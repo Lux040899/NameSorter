@@ -3,7 +3,7 @@ using NameSorter;
 using System.Globalization;
 using System;
 
-namespace NameTest
+namespace PersonTest
 {
     [TestClass]
     public class PersonTest
@@ -13,7 +13,7 @@ namespace NameTest
         public void Last_Name_check()
         {
             string expected = "Mittal";
-            string actual = person.LastName; 
+            string actual = person.GetLastName(); 
 
             Assert.AreEqual(expected, actual, "Name not reversed corretcly");
         }
@@ -22,7 +22,7 @@ namespace NameTest
         public void Given_Name_check()
         {
             string expected = "Lakshya";
-            string actual = person.GivenNames;
+            string actual = person.GetGivenName();
 
             Assert.AreEqual(expected, actual, "Name not stored correctly");
         }
@@ -34,7 +34,7 @@ namespace NameTest
             DateTime.TryParseExact("04-08-99", "dd-MM-yy", CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out date);
 
-            Assert.AreEqual(person._dateOfBirth, date, "Not compared correctly");
+            Assert.AreEqual(person.GetDate(), date, "Not compared correctly");
         }
     }
 }

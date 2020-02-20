@@ -50,21 +50,20 @@ namespace NameSorter
                 Console.ReadKey();                
             }
      
-            if (missing_info_count > 0)
-            {
+            if (missing_info_count > 0) {
                 Console.WriteLine("Press any key to sort the remaining people according to their last name\n");
                 Console.ReadKey();
                 Console.WriteLine();
             }
 
-            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ThenBy(person => person._dateOfBirth)
-                .ToList();
+            people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
+                ThenBy(person => person.GetDate()).ToList();
 
 
             foreach (Person person in people)
             {
-                Console.WriteLine(person.getName());
-                sortPersonList.Add(person.getName());
+                Console.WriteLine(person.GetName());
+                sortPersonList.Add(person.GetName());
             }
 
             File.WriteAllLines("sorted-names-list.txt", sortPersonList);
