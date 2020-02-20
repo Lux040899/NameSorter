@@ -11,22 +11,54 @@ namespace NameSorter
         {
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            int line_count = 0;
+            int person_count = 0;
+            int missing_info_count = 0;
 
-            foreach (string info in File.ReadLines(args[0]))
+
+            try
             {
-                try
+                foreach (string info in File.ReadLines(args[0]))
                 {
-                    line_count += 1;
-                    people.Add(new Person(info, line_count));
+                    try
+                    {
+                        person_count += 1;
+                        people.Add(new Person(info));
+                    }
+                    catch (MissingPersonException)
+                    {
+                        Console.WriteLine("The person in line " + person_count + " is missing all of their information.");
+                    }
+                    catch (MissingLastNameException)
+                    {
+                        missing_info_count += 1;
+                        Console.WriteLine("The person in line " + person_count + " with info, " +
+                            info + " is missing his/her Last Name.");
+                    }
+                    catch (MissingBDayException)
+                    {
+                        missing_info_count += 1;
+                        Console.WriteLine("The person in line " + person_count + " with info, " +
+                            info + " is missing his/her Birthday.");
+                    }
                 }
-                catch (MissingInfoException)
-                {
-                    Console.WriteLine("The person in line " + line_count + " is missing information");
-                }
+
             }
 
-            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ToList();
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine($"[Data File Missing] {e}");
+                Console.ReadKey();                
+            }
+     
+            if (missing_info_count > 0)
+            {
+                Console.WriteLine("Press any key to sort the remaining people according to their last name\n");
+                Console.ReadKey();
+                Console.WriteLine();
+            }
+
+            people = people.OrderBy(person => person.LastName).ThenBy(person => person.GivenNames).ThenBy(person => person._dateOfBirth)
+                .ToList();
 
 
             foreach (Person person in people)

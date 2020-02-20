@@ -2,8 +2,20 @@
 
 namespace NameSorter
 {
-    class MissingInfoException : Exception
+    class MissingLastNameException : Exception
     {
-        public MissingInfoException() { }
+        public MissingLastNameException() { }
+
+
+        public MissingLastNameException(string message)
+            : base(message)
+        {
+        }
+
+        public MissingLastNameException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
     }
 }
