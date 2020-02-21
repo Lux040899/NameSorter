@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace NameSorter  
 {
     class Program
@@ -11,8 +12,9 @@ namespace NameSorter
         {
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            int person_count = 0;
-            int missing_info_count = 0;
+            int personCount = 0;
+            int lineCount = 0;
+            int missingInfoCount = 0;
 
 
             try
@@ -21,23 +23,24 @@ namespace NameSorter
                 {
                     try
                     {
-                        person_count += 1;
+                        lineCount += 1;
                         people.Add(new Person(info));
+                        personCount += 1;
                     }
                     catch (MissingPersonException)
                     {
-                        Console.WriteLine("The person in line " + person_count + " is missing all of their information.");
+                        Console.WriteLine("The person in line " + lineCount + " is missing all of their information.");
                     }
                     catch (MissingLastNameException)
                     {
-                        missing_info_count += 1;
-                        Console.WriteLine("The person in line " + person_count + " with info, " +
+                        missingInfoCount += 1;
+                        Console.WriteLine("The person in line " + lineCount + " with info, " +
                             info + " is missing his/her Last Name.");
                     }
                     catch (MissingBDayException)
                     {
-                        missing_info_count += 1;
-                        Console.WriteLine("The person in line " + person_count + " with info, " +
+                        missingInfoCount += 1;
+                        Console.WriteLine("The person in line " + lineCount + " with info, " +
                             info + " is missing his/her Birthday.");
                     }
                 }
@@ -50,7 +53,7 @@ namespace NameSorter
                 Console.ReadKey();                
             }
      
-            if (missing_info_count > 0) {
+            if (missingInfoCount > 0) {
                 Console.WriteLine("Press any key to sort the remaining people according to their last name\n");
                 Console.ReadKey();
                 Console.WriteLine();
