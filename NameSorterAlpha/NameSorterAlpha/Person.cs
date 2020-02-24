@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Genderize;
+
 
 namespace NameSorter 
 {
@@ -10,7 +10,7 @@ namespace NameSorter
         private  string _givenNames;
         private string _lastName;
         private DateTime _dateOfBirth;
-        private string _gender;
+        private SetGender Gender;
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
@@ -41,27 +41,13 @@ namespace NameSorter
             }
 
             _givenNames = _givenNames.TrimEnd();
-
-            SetGender(_givenNames);
-        }
-
-        async Task SetGender(string name)
-        {
-            var client = new GenderizeClient();
-            var result = await client.GetNameGender(name);
-            if (result.Gender.HasValue) {
-                _gender = result.Gender.Value.ToString();
-            }
-            else {
-                _gender = "";
-            }
+            Gender = new SetGender(_givenNames);
 
         }
-
 
         public string GetName()
         {
-            return _givenNames + " " + _lastName + " " + _gender;
+            return _givenNames + " " + _lastName + " " + Gender.GetGender();
         }
 
         public string GetGivenName()
@@ -72,11 +58,6 @@ namespace NameSorter
         public string GetLastName()
         {
             return _lastName;
-        }
-
-        public string GetGender()
-        {
-            return _gender;
         }
 
         public DateTime GetDate()
