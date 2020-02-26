@@ -11,13 +11,13 @@ namespace NameSorter
         private string _lastName;
         private DateTime _dateOfBirth;
         private SetGender Gender;
-        private int lineCount;
+        private int _lineCount;
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
         public void Initialise(string info, int lineCount)
         {
-            this.lineCount = lineCount;
+            _lineCount = lineCount;
             info = info.TrimEnd();
             string[] infoArray = info.Split(' ');
             int length = infoArray.Length;
@@ -26,12 +26,11 @@ namespace NameSorter
 
             if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out _dateOfBirth)) {
+            } else throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Birthday.");
+            
 
-            } else {
-                throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Birthday.");
-            }
-
-            if (length < 3) throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Last Name.");
+            if (length < 3) throw new MissingDataException($"The person in line {lineCount} " +
+                $" with info {info} is missing his/her Last Name.");
 
             _lastName = infoArray[length - 2];
 
