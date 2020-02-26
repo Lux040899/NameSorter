@@ -16,7 +16,6 @@ namespace NameSorter
 
         public void Initialise(string info)
         {
-
             info = info.TrimEnd();
             string[] infoArray = info.Split(' ');
             int length = infoArray.Length;
@@ -45,11 +44,9 @@ namespace NameSorter
 
         public async Task InitialiseGender()
         {
-
             Gender = new SetGender();            
             await Gender.SetFinalGender(_givenNames);
             Console.WriteLine("Gender Assigned");
-       
         }
 
         public string GetName()
