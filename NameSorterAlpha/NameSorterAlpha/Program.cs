@@ -14,9 +14,9 @@ namespace NameSorter
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
             List<Task> setAllGenders = new List<Task>();
+       
             int lineCount = 0;
             int missingInfoCount = 0;
-
 
             try
             {
@@ -24,30 +24,18 @@ namespace NameSorter
                 {
                     try
                     {
-                        lineCount += 1;
                         Person person = new Person();
-                        person.Initialise(info);
+                        lineCount += 1;                        
+                        person.Initialise(info, lineCount);
                         people.Add(person);
                         setAllGenders.Add(person.InitialiseGender());                                        
                     }
-                    catch (MissingPersonException)
-                    {
-                        Console.WriteLine("The person in line " + lineCount + " is missing all of their information.");
-                    }
-                    catch (MissingLastNameException)
+                    catch (MissingDataException e)
                     {
                         missingInfoCount += 1;
-                        Console.WriteLine("The person in line " + lineCount + " with info, " +
-                            info + " is missing his/her Last Name.");
-                    }
-                    catch (MissingBDayException)
-                    {
-                        missingInfoCount += 1;
-                        Console.WriteLine("The person in line " + lineCount + " with info, " +
-                            info + " is missing his/her Birthday.");
+                        Console.WriteLine($"{e}");
                     }
                 }
-
             }
 
             catch (FileNotFoundException e)
@@ -56,23 +44,22 @@ namespace NameSorter
                 Console.ReadKey();                
             }
      
-            if (missingInfoCount > 0) {
-                Console.WriteLine("Press any key to sort the remaining people according to their last name\n");
-                Console.ReadKey();
-                Console.WriteLine();
-            }
-
             people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
                 ThenBy(person => person.GetDate()).ToList();
-
 
             foreach (Person person in people)
             {
                 Console.WriteLine(person.GetName());
                 sortPersonList.Add(person.GetName());
             }
+           
+            Task.WhenAll(setAllGenders).Wait();
 
-            foreach (Task setGender in setAllGenders) setGender.Wait();
+            if (missingInfoCount > 0)
+            {
+                Console.Write("Press any key to sort the remaining people according to their last name:");
+                Console.ReadKey();
+            }
 
             foreach (Person person in people)
             {
@@ -83,7 +70,5 @@ namespace NameSorter
             File.WriteAllLines("sorted-names-list.txt", sortPersonList);
             Console.ReadKey();
         }
-
     }
-
 }

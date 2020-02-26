@@ -56,10 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MissingPersonException.cs" />
     <Compile Include="Person.cs" />
-    <Compile Include="MissingBDayException.cs" />
-    <Compile Include="MissingInfoException.cs" />
+    <Compile Include="MissingDataException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetGender.cs" />
