@@ -13,7 +13,7 @@ namespace NameSorter
 
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            int personCount = 0;
+            List<Task> setAllGenders = new List<Task>();
             int lineCount = 0;
             int missingInfoCount = 0;
 
@@ -28,8 +28,7 @@ namespace NameSorter
                         Person person = new Person();
                         person.Initialise(info);
                         people.Add(person);
-                        var someTask = person.InitialiseGender();                                        
-                        personCount += 1;
+                        setAllGenders.Add(person.InitialiseGender());                                        
                     }
                     catch (MissingPersonException)
                     {
@@ -73,14 +72,12 @@ namespace NameSorter
                 sortPersonList.Add(person.GetName());
             }
 
-            int i = 1;
-            while (i > 0)
+            foreach (Task setGender in setAllGenders) setGender.Wait();
+
+            foreach (Person person in people)
             {
-                foreach (Person person in people)
-                {
-                    Console.WriteLine(person.GetName());
-                    Console.ReadKey();
-                }
+                Console.WriteLine(person.GetName());
+                sortPersonList.Add(person.GetName());
             }
 
             File.WriteAllLines("sorted-names-list.txt", sortPersonList);
