@@ -2,14 +2,15 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace NameSorter  
 {
     class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
+
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
             int personCount = 0;
@@ -24,7 +25,10 @@ namespace NameSorter
                     try
                     {
                         lineCount += 1;
-                        people.Add(new Person(info));
+                        Person person = new Person();
+                        person.Initialise(info);
+                        people.Add(person);
+                        var someTask = person.InitialiseGender();                                        
                         personCount += 1;
                     }
                     catch (MissingPersonException)
@@ -67,6 +71,16 @@ namespace NameSorter
             {
                 Console.WriteLine(person.GetName());
                 sortPersonList.Add(person.GetName());
+            }
+
+            int i = 1;
+            while (i > 0)
+            {
+                foreach (Person person in people)
+                {
+                    Console.WriteLine(person.GetName());
+                    Console.ReadKey();
+                }
             }
 
             File.WriteAllLines("sorted-names-list.txt", sortPersonList);

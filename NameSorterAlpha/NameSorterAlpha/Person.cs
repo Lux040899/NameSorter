@@ -14,7 +14,7 @@ namespace NameSorter
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
-        public Person(string info)
+        public void Initialise(string info)
         {
 
             info = info.TrimEnd();
@@ -40,9 +40,16 @@ namespace NameSorter
                 _givenNames += ' ';
             }
 
-            _givenNames = _givenNames.TrimEnd();
-            Gender = new SetGender(_givenNames);
+            _givenNames = _givenNames.TrimEnd();            
+        }
 
+        public async Task InitialiseGender()
+        {
+
+            Gender = new SetGender();            
+            await Gender.SetFinalGender(_givenNames);
+            Console.WriteLine("Gender Assigned");
+       
         }
 
         public string GetName()
