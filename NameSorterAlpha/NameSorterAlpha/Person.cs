@@ -26,7 +26,8 @@ namespace NameSorter
 
             if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out _dateOfBirth)) {
-            } else throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Birthday.");
+            }
+            else throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Birthday.");
             
 
             if (length < 3) throw new MissingDataException($"The person in line {lineCount} " +
@@ -48,8 +49,6 @@ namespace NameSorter
             Gender = new SetGender();
 
             await Gender.SetFinalGender(_givenNames);
-
-            Console.WriteLine("Gender Assigned");
         }
 
         public string GetName()

@@ -43,16 +43,28 @@ namespace NameSorter
                 Console.WriteLine($"[Data File Missing] {e}");
                 Console.ReadKey();                
             }
-     
-            people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
-                ThenBy(person => person.GetDate()).ToList();
 
-            foreach (Person person in people)
+            Console.Write("Press 1 to sort the names in ascending order or press 2 to sort the names in descending order: ");
+
+            int sorting_way = Convert.ToInt32(Console.ReadLine());
+
+            while (sorting_way != 1 && sorting_way != 2)
             {
-                Console.WriteLine(person.GetName());
-                sortPersonList.Add(person.GetName());
+                Console.Write("Incorrect Input, please choose again: ");
+                sorting_way = Convert.ToInt32(Console.ReadLine());
             }
-           
+
+            if (sorting_way == 1)
+            {
+                people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
+                    ThenBy(person => person.GetDate()).ToList();
+            }
+            else
+            {
+                people = people.OrderByDescending(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
+                    ThenBy(person => person.GetDate()).ToList();
+            }
+
             Task.WhenAll(setAllGenders).Wait();
 
             if (missingInfoCount > 0)
