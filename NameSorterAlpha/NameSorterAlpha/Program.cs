@@ -1,48 +1,22 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 
 namespace NameSorter  
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            List<Task> setAllGenders = new List<Task>();
-       
-            int lineCount = 0;
-            int missingInfoCount = 0;
+            IRead read = new ReadFromFile();
+            IWrite write = new WriteToFile();
+            ISorter sorter;
 
-            try
-            {
-                foreach (string info in File.ReadLines(args[0]))
-                {
-                    try
-                    {
-                        Person person = new Person();
-                        lineCount += 1;                        
-                        person.Initialise(info, lineCount);
-                        people.Add(person);
-                        setAllGenders.Add(person.InitialiseGender());                                        
-                    }
-                    catch (MissingDataException e)
-                    {
-                        missingInfoCount += 1;
-                        Console.WriteLine($"{e}");
-                    }
-                }
-            }
-
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine($"[Data File Missing] {e}");
-                Console.ReadKey();                
-            }
+            List<Task> setAllGenders = read.ReadData(args, people);
 
             Console.Write("Press 1 to sort the names in ascending order or press 2 to sort the names in descending order: ");
 
@@ -54,24 +28,12 @@ namespace NameSorter
                 sorting_way = Convert.ToInt32(Console.ReadLine());
             }
 
-            if (sorting_way == 1)
-            {
-                people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
-                    ThenBy(person => person.GetDate()).ToList();
-            }
-            else
-            {
-                people = people.OrderByDescending(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
-                    ThenBy(person => person.GetDate()).ToList();
-            }
+            if (sorting_way == 1) sorter = new SorterAscending();
+            else sorter = new SorterDescending();
+
+            sorter.Sort(people);
 
             Task.WhenAll(setAllGenders).Wait();
-
-            if (missingInfoCount > 0)
-            {
-                Console.Write("Press any key to sort the remaining people according to their last name:");
-                Console.ReadKey();
-            }
 
             foreach (Person person in people)
             {
@@ -79,7 +41,7 @@ namespace NameSorter
                 sortPersonList.Add(person.GetName());
             }
 
-            File.WriteAllLines("sorted-names-list.txt", sortPersonList);
+            write.WriteData(sortPersonList);
             Console.ReadKey();
         }
     }
