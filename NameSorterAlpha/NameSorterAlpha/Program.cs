@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Autofac;
 
 namespace NameSorter  
 {
@@ -12,8 +10,8 @@ namespace NameSorter
         {
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            IRead read = new ReadFromFile();
-            IWrite write = new WriteToFile();
+            IRead read = Factory.CreateReader();
+            IWrite write = Factory.CreateWriter();
             ISorter sorter;
 
             List<Task> setAllGenders = read.ReadData(args, people);
@@ -28,10 +26,9 @@ namespace NameSorter
                 sorting_way = Convert.ToInt32(Console.ReadLine());
             }
 
-            if (sorting_way == 1) sorter = new SorterAscending();
-            else sorter = new SorterDescending();
+            sorter = Factory.CreateSorter(sorting_way);
 
-            sorter.Sort(people);
+            people = sorter.Sort(people);
 
             Task.WhenAll(setAllGenders).Wait();
 

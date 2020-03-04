@@ -20,7 +20,7 @@ namespace NameSorter
                 {
                     try
                     {
-                        Person person = new Person();
+                        Person person = Factory.CreatePerson();
                         lineCount += 1;
                         person.Initialise(info, lineCount);
                         people.Add(person);

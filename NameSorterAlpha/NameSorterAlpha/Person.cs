@@ -46,7 +46,7 @@ namespace NameSorter
 
         public async Task InitialiseGender()
         {
-            Gender = new SetGender();
+            Gender = Factory.CreateGender();
 
             await Gender.SetFinalGender(_givenNames);
         }
