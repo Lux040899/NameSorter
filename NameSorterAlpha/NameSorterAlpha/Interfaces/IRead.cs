@@ -5,6 +5,7 @@ namespace NameSorter
 {
     public interface IRead
     {
-        List<Task> ReadData(string[] args, List<Person> people);
+       List<IPerson> ReadData(string filePath, out List<Task> setAllGenders);
+       
     }
 }

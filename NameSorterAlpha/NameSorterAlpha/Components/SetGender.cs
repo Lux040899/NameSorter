@@ -4,7 +4,7 @@ using Genderize;
 
 namespace NameSorter
 {
-    class SetGender
+    class SetGender : ISetGender
     {
         private string _gender;
  

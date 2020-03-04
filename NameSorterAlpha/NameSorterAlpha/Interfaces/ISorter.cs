@@ -4,6 +4,6 @@ namespace NameSorter
 {
     interface ISorter
     {
-        List<Person> Sort(List<Person> people);
+        IList<IPerson> Sort(IList<IPerson> people);
     }
 }

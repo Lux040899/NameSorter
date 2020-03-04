@@ -7,20 +7,21 @@ namespace NameSorter
 {
     class ReadFromFile : IRead
     {
-        public List<Task> setAllGenders = new List<Task>();
-
-        public List<Task> ReadData(string[] args, List<Person> people)
+       
+       public List<IPerson> ReadData(string filePath, out List<Task> setAllGenders)
         {
+            setAllGenders = new List<Task>();
+            List<IPerson> people = new List<IPerson>();
             int lineCount = 0;
             int missingInfoCount = 0;
 
             try
             {
-                foreach (string info in File.ReadLines(args[0]))
+                foreach (string info in File.ReadLines(filePath))
                 {
                     try
                     {
-                        Person person = Factory.CreatePerson();
+                        IPerson person = Factory.CreatePerson();
                         lineCount += 1;
                         person.Initialise(info, lineCount);
                         people.Add(person);
@@ -45,7 +46,7 @@ namespace NameSorter
                 Console.ReadKey();
             }
 
-            return setAllGenders;
+            return people;
         }
     }
 }

@@ -18,12 +18,12 @@
             else return new SorterDescending();
         }
 
-        public static SetGender CreateGender()
+        public static ISetGender CreateGender()
         {
             return new SetGender();
         }
 
-        public static Person CreatePerson()
+        public static IPerson CreatePerson()
         {
             return new Person();
         }

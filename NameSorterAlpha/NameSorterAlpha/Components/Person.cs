@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace NameSorter 
 {
-    public class Person
+    public class Person : IPerson
     {        
         private  string _givenNames;
         private string _lastName;
         private DateTime _dateOfBirth;
-        private SetGender Gender;
+        private ISetGender Gender;
         private int _lineCount;
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };

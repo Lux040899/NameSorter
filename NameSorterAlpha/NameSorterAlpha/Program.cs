@@ -8,13 +8,12 @@ namespace NameSorter
     {
         private static void Main(string[] args)
         {
-            List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
             IRead read = Factory.CreateReader();
             IWrite write = Factory.CreateWriter();
             ISorter sorter;
 
-            List<Task> setAllGenders = read.ReadData(args, people);
+            IList<IPerson> people = read.ReadData(args[0] , out var setAllGenders);
 
             Console.Write("Press 1 to sort the names in ascending order or press 2 to sort the names in descending order: ");
 

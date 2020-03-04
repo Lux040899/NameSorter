@@ -5,7 +5,7 @@ namespace NameSorter
 {
     class SorterDescending : ISorter
     {
-        public List<Person> Sort(List<Person> people)
+        public IList<IPerson> Sort(IList<IPerson> people)
         {
             return people = people.OrderByDescending(person => person.GetLastName()).ThenByDescending(person => person.GetGivenName()).
                     ThenByDescending(person => person.GetDate()).ToList();

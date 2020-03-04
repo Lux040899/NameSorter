@@ -8,7 +8,7 @@ namespace NameSorter
 {
     class SorterAscending : ISorter
     {
-        public List<Person> Sort(List<Person> people)
+        public IList<IPerson> Sort(IList<IPerson> people)
         {
             return people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
                     ThenBy(person => person.GetDate()).ToList();
