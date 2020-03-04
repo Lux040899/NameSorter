@@ -2,18 +2,21 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NameSorter  
 {
     class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
+
             List<Person> people = new List<Person>();
             List<string> sortPersonList = new List<string>();
-            int person_count = 0;
-            int missing_info_count = 0;
-
+            List<Task> setAllGenders = new List<Task>();
+       
+            int lineCount = 0;
+            int missingInfoCount = 0;
 
             try
             {
@@ -21,27 +24,18 @@ namespace NameSorter
                 {
                     try
                     {
-                        person_count += 1;
-                        people.Add(new Person(info));
+                        Person person = new Person();
+                        lineCount += 1;                        
+                        person.Initialise(info, lineCount);
+                        people.Add(person);
+                        setAllGenders.Add(person.InitialiseGender());                                        
                     }
-                    catch (MissingPersonException)
+                    catch (MissingDataException e)
                     {
-                        Console.WriteLine("The person in line " + person_count + " is missing all of their information.");
-                    }
-                    catch (MissingLastNameException)
-                    {
-                        missing_info_count += 1;
-                        Console.WriteLine("The person in line " + person_count + " with info, " +
-                            info + " is missing his/her Last Name.");
-                    }
-                    catch (MissingBDayException)
-                    {
-                        missing_info_count += 1;
-                        Console.WriteLine("The person in line " + person_count + " with info, " +
-                            info + " is missing his/her Birthday.");
+                        missingInfoCount += 1;
+                        Console.WriteLine($"{e}");
                     }
                 }
-
             }
 
             catch (FileNotFoundException e)
@@ -49,16 +43,35 @@ namespace NameSorter
                 Console.WriteLine($"[Data File Missing] {e}");
                 Console.ReadKey();                
             }
-     
-            if (missing_info_count > 0) {
-                Console.WriteLine("Press any key to sort the remaining people according to their last name\n");
-                Console.ReadKey();
-                Console.WriteLine();
+
+            Console.Write("Press 1 to sort the names in ascending order or press 2 to sort the names in descending order: ");
+
+            int sorting_way = Convert.ToInt32(Console.ReadLine());
+
+            while (sorting_way != 1 && sorting_way != 2)
+            {
+                Console.Write("Incorrect Input, please choose again: ");
+                sorting_way = Convert.ToInt32(Console.ReadLine());
             }
 
-            people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
-                ThenBy(person => person.GetDate()).ToList();
+            if (sorting_way == 1)
+            {
+                people = people.OrderBy(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
+                    ThenBy(person => person.GetDate()).ToList();
+            }
+            else
+            {
+                people = people.OrderByDescending(person => person.GetLastName()).ThenBy(person => person.GetGivenName()).
+                    ThenBy(person => person.GetDate()).ToList();
+            }
 
+            Task.WhenAll(setAllGenders).Wait();
+
+            if (missingInfoCount > 0)
+            {
+                Console.Write("Press any key to sort the remaining people according to their last name:");
+                Console.ReadKey();
+            }
 
             foreach (Person person in people)
             {
@@ -69,7 +82,5 @@ namespace NameSorter
             File.WriteAllLines("sorted-names-list.txt", sortPersonList);
             Console.ReadKey();
         }
-
     }
-
 }

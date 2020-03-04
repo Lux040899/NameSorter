@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading.Tasks;
+
 
 namespace NameSorter 
 {
@@ -7,27 +9,29 @@ namespace NameSorter
     {        
         private  string _givenNames;
         private string _lastName;
-        private DateTime _dateOfBirth;     
+        private DateTime _dateOfBirth;
+        private SetGender Gender;
+        private int _lineCount;
 
         private readonly string[] dateFormat = { "dd-MM-yy", "dd/MM/yy" };
 
-        public Person(string info)
+        public void Initialise(string info, int lineCount)
         {
-
+            _lineCount = lineCount;
             info = info.TrimEnd();
             string[] infoArray = info.Split(' ');
             int length = infoArray.Length;
 
-            if (info == "") throw new MissingPersonException();
+            if (info == "") throw new MissingDataException($"The person in {lineCount} is missing all information.");
 
             if (DateTime.TryParseExact(infoArray[length - 1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None,
                 out _dateOfBirth)) {
-
-            } else {
-                throw new MissingBDayException();
             }
+            else throw new MissingDataException($"The person in line {lineCount}  with info {info} is missing his/her Birthday.");
+            
 
-            if (length < 3) throw new MissingLastNameException();
+            if (length < 3) throw new MissingDataException($"The person in line {lineCount} " +
+                $" with info {info} is missing his/her Last Name.");
 
             _lastName = infoArray[length - 2];
 
@@ -37,13 +41,19 @@ namespace NameSorter
                 _givenNames += ' ';
             }
 
-            _givenNames = _givenNames.TrimEnd();
+            _givenNames = _givenNames.TrimEnd();            
+        }
 
+        public async Task InitialiseGender()
+        {
+            Gender = new SetGender();
+
+            await Gender.SetFinalGender(_givenNames);
         }
 
         public string GetName()
         {
-            return _givenNames + " " + _lastName;
+            return _givenNames + " " + _lastName + " " + Gender.GetGender();
         }
 
         public string GetGivenName()
@@ -62,4 +72,3 @@ namespace NameSorter
         }
     }
 }
-
