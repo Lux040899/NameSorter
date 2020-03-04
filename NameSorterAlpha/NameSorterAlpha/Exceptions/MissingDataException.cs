@@ -8,7 +8,7 @@ namespace NameSorter
 
         public MissingDataException(string message)
             : base(message)
-        {
+        {  
         }
 
         public MissingDataException(string message, Exception inner)
