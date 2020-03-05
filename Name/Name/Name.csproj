@@ -71,7 +71,8 @@
     <Compile Include="Output.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Read.cs" />
+    <Compile Include="ReadFromDB.cs" />
+    <Compile Include="ReadFromFile.cs" />
     <Compile Include="Sort.cs" />
   </ItemGroup>
   <ItemGroup>

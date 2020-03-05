@@ -8,7 +8,9 @@ namespace Name
 {
     class NameParser : INameParser 
     {
-        public string[] nameArray;
+        public string[] nameArray { get; }
+
+
         public NameParser(string name)
         {
             nameArray = name.Split();

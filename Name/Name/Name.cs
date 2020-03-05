@@ -11,5 +11,11 @@
             _lastName = parserObj.nameArray[1];
         }
 
+        public Name(string firstName, string lastName)
+        {
+            _firstName = firstName.Trim();
+            _lastName = lastName.Trim();
+        }
+
     }
 }
