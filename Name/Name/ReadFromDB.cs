@@ -21,7 +21,6 @@ namespace Name
                 SqlCommand command;
                 SqlDataReader dataReader;
                 string sql = "Select FirstName, LastName from UnsortedName";
-                string name = "";
 
                 command = new SqlCommand(sql, cnn);
 
@@ -30,14 +29,18 @@ namespace Name
                 while (dataReader.Read())
                 {
                     unsortedNames.Add(new Name(dataReader.GetString(0), dataReader.GetString(1)));
-                    name = "";
                 }
+
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 Console.WriteLine("Unable to access the DataBase");
             }
+
             return unsortedNames;
         }
     }

@@ -74,6 +74,7 @@
     <Compile Include="ReadFromDB.cs" />
     <Compile Include="ReadFromFile.cs" />
     <Compile Include="Sort.cs" />
+    <Compile Include="Write.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

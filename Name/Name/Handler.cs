@@ -19,11 +19,12 @@ namespace Name
             _outputNames = outputNames;
         }
 
-        public void Start(string filePath)
+        public void Start(string source)
         {
-            List<Name> unsortedNames = _readNames.ReadData(filePath);
+            List<Name> unsortedNames = _readNames.ReadData(source);
             List<Name> sortedNames = _sorter.Sorting(unsortedNames);
-            _outputNames.ConsoleOutput(sortedNames);           
+            Write.WriteData(source, sortedNames);
+            _outputNames.ConsoleOutput(sortedNames);            
         }
     }
 }

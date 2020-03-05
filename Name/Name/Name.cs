@@ -7,8 +7,14 @@
 
         public Name(NameParser parserObj)
         {
-            _firstName = parserObj.nameArray[0];
-            _lastName = parserObj.nameArray[1];
+            int length = parserObj.nameArray.Length;
+            for (int i = 0; i < length - 2; i++)
+            {
+                _firstName += parserObj.nameArray[i];
+                _firstName += ' ';
+            }
+            _firstName = _firstName.TrimEnd();
+            _lastName = parserObj.nameArray[length - 1];
         }
 
         public Name(string firstName, string lastName)
