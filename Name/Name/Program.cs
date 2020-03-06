@@ -16,7 +16,7 @@ namespace Name
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IApplication>();
-                app.Run(args[0]);
+                app.Run(@"Server = localhost\SQLEXPRESS; Database = People; Trusted_Connection = True;");
             }
         }
     }
