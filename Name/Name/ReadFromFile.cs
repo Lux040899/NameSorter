@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Name
 {
-    class Read : IRead
+    class ReadFromFile : IRead
     {
         public List<Name> ReadData(string filePath)
         {

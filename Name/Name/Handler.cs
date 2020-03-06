@@ -11,19 +11,22 @@ namespace Name
         IRead _readNames;
         IOutput _outputNames;
         ISort _sorter;
+        IWrite _writer;
 
-        public Handler(IRead readNames, IOutput outputNames, ISort sorter)
+        public Handler(IRead readNames, IOutput outputNames, ISort sorter, IWrite writer)
         {
             _readNames = readNames;
             _sorter = sorter;
+            _writer = writer;
             _outputNames = outputNames;
         }
 
-        public void Start(string filePath)
+        public void Start(string source)
         {
-            List<Name> unsortedNames = _readNames.ReadData(filePath);
+            List<Name> unsortedNames = _readNames.ReadData(source);
             List<Name> sortedNames = _sorter.Sorting(unsortedNames);
-            _outputNames.ConsoleOutput(sortedNames);           
+            _writer.WriteData(source, sortedNames);
+            _outputNames.ConsoleOutput(sortedNames);            
         }
     }
 }
