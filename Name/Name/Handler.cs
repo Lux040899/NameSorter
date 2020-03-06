@@ -11,11 +11,13 @@ namespace Name
         IRead _readNames;
         IOutput _outputNames;
         ISort _sorter;
+        IWrite _writer;
 
-        public Handler(IRead readNames, IOutput outputNames, ISort sorter)
+        public Handler(IRead readNames, IOutput outputNames, ISort sorter, IWrite writer)
         {
             _readNames = readNames;
             _sorter = sorter;
+            _writer = writer;
             _outputNames = outputNames;
         }
 
@@ -23,7 +25,7 @@ namespace Name
         {
             List<Name> unsortedNames = _readNames.ReadData(source);
             List<Name> sortedNames = _sorter.Sorting(unsortedNames);
-            Write.WriteData(source, sortedNames);
+            _writer.WriteData(source, sortedNames);
             _outputNames.ConsoleOutput(sortedNames);            
         }
     }

@@ -66,6 +66,7 @@
     <Compile Include="IOutput.cs" />
     <Compile Include="IRead.cs" />
     <Compile Include="ISort.cs" />
+    <Compile Include="IWrite.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NameParser.cs" />
     <Compile Include="Output.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="ReadFromDB.cs" />
     <Compile Include="ReadFromFile.cs" />
     <Compile Include="Sort.cs" />
-    <Compile Include="Write.cs" />
+    <Compile Include="WriteToDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

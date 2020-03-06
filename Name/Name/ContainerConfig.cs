@@ -12,7 +12,7 @@ namespace Name
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
+             
             builder.RegisterType<Handler>().As<IHandler>();
             builder.RegisterType<Application>().As<IApplication>();
             builder.RegisterType<ReadFromDB>().As<IRead>();
@@ -20,6 +20,7 @@ namespace Name
             builder.RegisterType<Name>().As<IName>();
             builder.RegisterType<NameParser>().As<INameParser>();
             builder.RegisterType<Sort>().As<ISort>();
+            builder.RegisterType<WriteToDB>().As<IWrite>();
 
             return builder.Build();
         }

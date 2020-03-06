@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Name
 {
-    class Write
+    class WriteToDB : IWrite
     {
-        public static void WriteData(string connectionString, List<Name> sortedNames)
+        public void WriteData(string connectionString, List<Name> sortedNames)
         {
             try
             {
