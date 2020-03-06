@@ -13,7 +13,6 @@ namespace Name
         {
             try
             {
-                int NameID = 0;
                 SqlConnection cnn;
                 cnn = new SqlConnection(connectionString);
                 cnn.Open();
@@ -22,17 +21,16 @@ namespace Name
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 string sql;
 
-                sql = $"Insert Into SortedName ([NameID], [FirstName], [LastName]) values";
+                sql = $"Insert Into SortedName ([FirstName], [LastName]) values";
 
                 foreach (Name name in sortedNames)
                 {
-                    NameID += 1;
-                    sql += $" ({NameID}, '{name._firstName}' , '{name._lastName}'),";
+                    sql += $" ('{name._firstName}' , '{name._lastName}'),";
                 }
                 sql = sql.TrimEnd(',');
                 sql += ";";
 
-                Console.WriteLine(sql);
+                //Console.WriteLine(sql);
 
                 command = new SqlCommand(sql, cnn);
                 adapter.InsertCommand = new SqlCommand(sql, cnn);
