@@ -4,6 +4,6 @@ namespace Name
 {
     interface IRead
     {
-        List<Name> ReadData(string source);
+        void ReadData(string source, List<Name> unsortedNames);
     }
 }
