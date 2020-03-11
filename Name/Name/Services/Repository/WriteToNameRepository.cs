@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Name
 {
-    class WriteToDB : IWrite
+    class WriteToNameRepository : IWrite
     {
         public void WriteData(string connectionString, List<Name> sortedNames)
         {
@@ -17,7 +14,6 @@ namespace Name
                 cnn = new SqlConnection(connectionString);
                 cnn.Open();
 
-                SqlCommand command;
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 string sql;
 
@@ -30,13 +26,9 @@ namespace Name
                 sql = sql.TrimEnd(',');
                 sql += ";";
 
-                //Console.WriteLine(sql);
-
-                command = new SqlCommand(sql, cnn);
                 adapter.InsertCommand = new SqlCommand(sql, cnn);
                 adapter.InsertCommand.ExecuteNonQuery();
 
-                command.Dispose();
                 cnn.Close();
             }
             catch (Exception e)

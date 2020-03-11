@@ -9,14 +9,12 @@ namespace Name
 {
     class ReadFromFile : IRead
     {
-        public List<Name> ReadData(string filePath)
+        public void ReadData(string filePath, List<Name> unsortedNames)
         {
-            List<Name> unsortedNames = new List<Name>();
             foreach (string name in File.ReadLines(filePath))
             {
                 unsortedNames.Add(new Name(new NameParser(name)));
-            }
-            return unsortedNames;
+            }            
         }
     }
 }
