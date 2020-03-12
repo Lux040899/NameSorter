@@ -16,9 +16,9 @@ namespace Name
             _handler = handler;
         }
 
-        public void Run(string filePath)
+        public void Run()
         {
-            _handler.Start(filePath);
+            _handler.Start();
         }
     }
 }

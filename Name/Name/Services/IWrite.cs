@@ -4,6 +4,6 @@ namespace Name
 {
     interface IWrite
     {
-        void WriteData(string connectionString, List<Name> sortedNames);
+        void WriteData(List<Name> sortedNames);
     }
 }

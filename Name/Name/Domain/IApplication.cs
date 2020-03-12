@@ -2,6 +2,6 @@
 {
     interface IApplication
     {
-        void Run(string filePath);
+        void Run();
     }
 }

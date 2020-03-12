@@ -2,6 +2,6 @@
 {
     interface IHandler
     {
-        void Start(string filePath);
+        void Start();
     }
 }

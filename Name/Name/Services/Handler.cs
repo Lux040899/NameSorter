@@ -21,11 +21,12 @@ namespace Name
             _outputNames = outputNames;
         }
 
-        public void Start(string source)
+        public void Start()
         {
-            List<Name> unsortedNames = _readNames.ReadData(source);
+            List<Name> unsortedNames = new List<Name>();
+            _readNames.ReadData(unsortedNames);
             List<Name> sortedNames = _sorter.Sorting(unsortedNames);
-            _writer.WriteData(source, sortedNames);
+            _writer.WriteData(sortedNames);
             _outputNames.ConsoleOutput(sortedNames);            
         }
     }
