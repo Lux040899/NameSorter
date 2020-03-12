@@ -13,7 +13,7 @@ namespace Name
             
             builder.RegisterType<Handler>().As<IHandler>();
             builder.RegisterType<Application>().As<IApplication>();
-            builder.RegisterType<ReadFromNameRepository>().As<IRead>();
+            builder.RegisterType<PersonReaderRepository>().As<IRead>();
             builder.RegisterType<Output>().As<IOutput>();
             builder.RegisterType<Name>().As<IName>();
             builder.RegisterType<NameParser>().As<INameParser>();
@@ -22,7 +22,7 @@ namespace Name
                 connectionString: ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString
             )).As<IPersonDataContext>();
             builder.RegisterType<Sort>().As<ISort>();
-            builder.RegisterType<WriteToNameRepository>().As<IWrite>();
+            builder.RegisterType<PersonWriterRepository>().As<IWrite>();
             return builder.Build();
         }
     }

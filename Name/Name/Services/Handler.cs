@@ -23,8 +23,7 @@ namespace Name
 
         public void Start()
         {
-            List<Name> unsortedNames = new List<Name>();
-            _readNames.ReadData(unsortedNames);
+            List<Name> unsortedNames = _readNames.ReadData();
             List<Name> sortedNames = _sorter.Sorting(unsortedNames);
             _writer.WriteData(sortedNames);
             _outputNames.ConsoleOutput(sortedNames);            

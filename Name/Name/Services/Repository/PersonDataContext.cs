@@ -12,14 +12,13 @@ namespace Name.Services
         string _connectionString;
         SqlConnection _cnn;
         SqlCommand _command;
-        SqlDataReader _dataReader;
 
         public PersonDataContext(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public SqlCommand ExecuteQuery(string sql)
+        public SqlCommand GetCommand(string sql)
         {
             try
             {
@@ -34,6 +33,32 @@ namespace Name.Services
                 Environment.Exit(0);
             }
             return _command;
+        }
+
+        public List<Name> ExecuteReadQuery(string sql)
+        {
+            List<Name> unsortedNames = new List<Name>();
+            SqlDataReader dataReader = GetCommand(sql).ExecuteReader();
+            while (dataReader.Read())
+            {
+                unsortedNames.Add(new Name(dataReader.GetString(0), dataReader.GetString(1)));
+            }
+
+            CloseContext();
+            dataReader.Close();
+            return unsortedNames;
+        }
+
+        public void ExecuteWriteQuery(string sql)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter
+            {
+                InsertCommand = GetCommand(sql)
+            };
+            adapter.InsertCommand.ExecuteNonQuery();
+
+            CloseContext();
+            adapter.Dispose();
         }
 
         public void CloseContext()

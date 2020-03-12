@@ -5,32 +5,29 @@ using Name.Services;
 
 namespace Name
 {
-    class ReadFromNameRepository : IRead
+    class PersonReaderRepository : IRead
     {
         IPersonDataContext _personDataContext; 
-        public ReadFromNameRepository (IPersonDataContext personDataContext)
+        public PersonReaderRepository (IPersonDataContext personDataContext)
         {
             _personDataContext = personDataContext;
 
         }
-        public void ReadData(List<Name> unsortedNames)
+        public List<Name> ReadData()
         {
+            List<Name> unsortedNames = new List<Name>();
+            string sql = "Select FirstName, LastName from UnsortedName";
+           
             try
-            {                
-                string sql = "Select FirstName, LastName from UnsortedName";
-                SqlDataReader dataReader = _personDataContext.ExecuteQuery(sql).ExecuteReader(); 
-                while (dataReader.Read())
-                {
-                    unsortedNames.Add(new Name(dataReader.GetString(0), dataReader.GetString(1)));
-                }
-
-                _personDataContext.CloseContext();
-                dataReader.Close();
+            {
+                unsortedNames = _personDataContext.ExecuteReadQuery(sql);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+
+            return unsortedNames;
         }
     }
 }
