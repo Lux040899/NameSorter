@@ -17,8 +17,10 @@ namespace Name
             builder.RegisterType<Output>().As<IOutput>();
             builder.RegisterType<Name>().As<IName>();
             builder.RegisterType<NameParser>().As<INameParser>();
-            builder.Register(ctx => new PersonDataContext(@"Server = localhost\SQLEXPRESS; Database = People; Trusted_Connection = True;"))
-                .As<IPersonDataContext>();
+            builder.Register(ctx => new PersonDataContext
+            (
+                connectionString: ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString
+            )).As<IPersonDataContext>();
             builder.RegisterType<Sort>().As<ISort>();
             builder.RegisterType<WriteToNameRepository>().As<IWrite>();
             return builder.Build();
