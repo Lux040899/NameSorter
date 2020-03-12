@@ -4,7 +4,7 @@ namespace Name.Services
 {
     interface IPersonDataContext
     {
-        SqlDataReader NewContext(string connectionString, string sql);
+        SqlCommand ExecuteQuery(string sql);
         void CloseContext();
     }
 }

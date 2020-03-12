@@ -9,9 +9,9 @@ namespace Name
 {
     class ReadFromFile : IRead
     {
-        public void ReadData(string filePath, List<Name> unsortedNames)
+        public void ReadData(List<Name> unsortedNames)
         {
-            foreach (string name in File.ReadLines(filePath))
+            foreach (string name in File.ReadLines("Lol"))
             {
                 unsortedNames.Add(new Name(new NameParser(name)));
             }            

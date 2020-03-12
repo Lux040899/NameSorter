@@ -9,18 +9,23 @@ namespace Name.Services
 {
     class PersonDataContext : IPersonDataContext
     {
+        string _connectionString;
         SqlConnection _cnn;
         SqlCommand _command;
         SqlDataReader _dataReader;
 
-        public SqlDataReader NewContext(string connectionString, string sql)
+        public PersonDataContext(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        public SqlCommand ExecuteQuery(string sql)
         {
             try
             {
-                _cnn = new SqlConnection(connectionString);
+                _cnn = new SqlConnection(_connectionString);
                 _cnn.Open();
-                _command = new SqlCommand(sql, _cnn);
-                _dataReader = _command.ExecuteReader();                
+                _command = new SqlCommand(sql, _cnn);                                
             }
             catch (Exception e)
             {
@@ -28,14 +33,13 @@ namespace Name.Services
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            return _dataReader;
+            return _command;
         }
 
         public void CloseContext()
         {
             _cnn.Close();
             _command.Dispose();
-            _dataReader.Close();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Name.Services;
 using Autofac;
+using System.Configuration;
 
 namespace Name
 {
@@ -16,10 +17,10 @@ namespace Name
             builder.RegisterType<Output>().As<IOutput>();
             builder.RegisterType<Name>().As<IName>();
             builder.RegisterType<NameParser>().As<INameParser>();
-            builder.RegisterType<PersonDataContext>().As<IPersonDataContext>();
+            builder.Register(ctx => new PersonDataContext(@"Server = localhost\SQLEXPRESS; Database = People; Trusted_Connection = True;"))
+                .As<IPersonDataContext>();
             builder.RegisterType<Sort>().As<ISort>();
             builder.RegisterType<WriteToNameRepository>().As<IWrite>();
-
             return builder.Build();
         }
     }

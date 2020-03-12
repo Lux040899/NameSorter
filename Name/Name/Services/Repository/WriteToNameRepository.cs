@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Name.Services;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -6,18 +7,18 @@ namespace Name
 {
     class WriteToNameRepository : IWrite
     {
-        public void WriteData(string connectionString, List<Name> sortedNames)
+        
+        IPersonDataContext _personDataContext;
+        public WriteToNameRepository(IPersonDataContext personDataContext)
+        {
+            _personDataContext = personDataContext;
+        }
+
+        public void WriteData(List<Name> sortedNames)
         {
             try
             {
-                SqlConnection cnn;
-                cnn = new SqlConnection(connectionString);
-                cnn.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                string sql;
-
-                sql = $"Insert Into SortedName ([FirstName], [LastName]) values";
+                string sql = $"Insert Into SortedName ([FirstName], [LastName]) values";
 
                 foreach (Name name in sortedNames)
                 {
@@ -26,11 +27,14 @@ namespace Name
                 sql = sql.TrimEnd(',');
                 sql += ";";
 
-                adapter.InsertCommand = new SqlCommand(sql, cnn);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = _personDataContext.ExecuteQuery(sql);
                 adapter.InsertCommand.ExecuteNonQuery();
 
-                cnn.Close();
+                _personDataContext.CloseContext();
+                adapter.Dispose();
             }
+
             catch (Exception e)
             {
                 Console.WriteLine($"{e}");
